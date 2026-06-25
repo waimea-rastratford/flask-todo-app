@@ -1,0 +1,33 @@
+{#=====================================================
+  Welcome page
+=====================================================#}
+
+{% extends 'pages/_base.jinja' %}
+
+
+{% block content %}
+
+    <h1 class="welcome">To Do List</h1>
+
+    <section id="creatures">
+
+        {% for task in tasks %}
+
+            <div class="creature">
+                <h3>{{ tasks.name }}</h3>
+                <p>priority: <strong>{{ tasks.priority }}</strong></p>
+            </div>
+
+        {% else %}
+
+            <p>No Creatures!</p>
+
+        {% endfor %}
+
+    </section>
+
+
+    
+
+{% endblock %}
+

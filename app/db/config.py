@@ -15,23 +15,23 @@
 #     SEED_DATA = "INSERT INTO name (...)" or None
 #----------------------------------------------------------------------------
 
-class TodoTable:
+class ToDoListTable:
 
-    NAME = "todo"
+    NAME = "tasks"
 
     SCHEMA = """
-        CREATE TABLE todo (
-            id      INTEGER PRIMARY KEY AUTOINCREMENT,
+        CREATE TABLE tasks (
+            id    INTEGER PRIMARY KEY AUTOINCREMENT,
             name    TEXT NOT NULL,
             priority    INTEGER NOT NULL DEFAULT 3,
-            complete    BOOLEAN(INTEGER) NOT NULL DEFAULT 0
+            complete    INTEGER NOT NULL DEFAULT 0
         )
     """
 
     SEED_DATA = """
-        INSERT INTO todo (name, priority, complete)
+        INSERT INTO tasks (complete, priority, name)
         VALUES
-            ("1", "4"  "Walk The Dog"),
+            ("1", "4", "Walk The Dog"),
             ("0", "1" ,"Do Homework"),
             ("0", "5", "Punch Austin")
     """
@@ -56,7 +56,7 @@ class TodoTable:
 #----------------------------------------------------------------------------
 
 TABLES = [
-    TodoTable,
+    ToDoListTable,
     # Add more tables here...
 ]
 

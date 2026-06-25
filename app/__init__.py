@@ -24,8 +24,16 @@ app = Flask(__name__)
 # Welcome page
 #-----------------------------------------------------------
 @app.get("/")
-def show_welcome():
-    return render_template("pages/welcome.jinja")
+def show_home():
+    with connect_db() as db:
+        sql = """
+            SELECT complete, priority, name
+            FROM tasks
+        """
+        params = ()
+        tasks = db.execute(sql, params).fetchall()
+
+        return render_template("pages/home.jinja", tasks=tasks)
 
 
 #-----------------------------------------------------------

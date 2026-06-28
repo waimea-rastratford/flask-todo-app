@@ -21,7 +21,7 @@ app = Flask(__name__)
 #===========================================================
 
 #-----------------------------------------------------------
-# Welcome page
+# Home page
 #-----------------------------------------------------------
 @app.get("/")
 def show_home():
@@ -35,21 +35,6 @@ def show_home():
 
         return render_template("pages/home.jinja", tasks=tasks)
 
-
-#-----------------------------------------------------------
-# Creature list page - Show all the creatures
-#-----------------------------------------------------------
-@app.get("/creatures")
-def show_all_creatures():
-    with connect_db() as db:
-        sql = """
-            SELECT id, species, name
-            FROM creatures
-        """
-        params = ()
-        creatures = db.execute(sql, params).fetchall()
-
-        return render_template("pages/creature_list.jinja", creatures=creatures)
 
 
 #-----------------------------------------------------------

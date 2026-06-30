@@ -7,24 +7,38 @@
 
 {% block content %}
 
-    <h1 class="welcome">To Do List</h1>
+    <h2 class="welcome">Tasks To Do</h2>
+    <div id="tasks">
 
-        <p>
-        {% for task in tasks %}
+    <ul class="task-list">
+     {% for task in tasks %}
+        <li class="task">
+        {% if task.complete %} 🗹 {% else %} ☐ {% endif %}
+            <span class="priority">{{ task.priority }}</span>
+            <span class="name">{{ task.name }}</span>
+            <p><a href ="/{{ task.id }}/delete">Delete</a></p>
+        </li>
+    {% endfor %}
+    </ul>
 
-            <div class="creature">
-                <h3>{{ task.name }}</h3>
-                <p>priority: <strong>{{ task.priority }}</strong></p>
-            </div>
-
-        {% else %}
-
-            <p>No Tasks!</p>
-
-        {% endfor %}
-        </p>
+    </div>
 
 
+<form method="post" action="/new">
+  
+    <label>
+      Name 
+      <input type="text" name="name" required>
+    </label>
+
+    <label>
+      Priority
+      <input type="number" name="priority" required>
+    </label>
+  
+  <button>Add Task</button>
+  </form>
+    
     
 
 {% endblock %}

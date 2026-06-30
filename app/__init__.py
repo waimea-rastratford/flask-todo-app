@@ -27,7 +27,7 @@ app = Flask(__name__)
 def show_home():
     with connect_db() as db:
         sql = """
-            SELECT complete, priority, name
+            SELECT complete, priority, name, id
             FROM tasks
         """
         params = ()
@@ -37,6 +37,48 @@ def show_home():
 
 
 
+
+#-----------------------------------------------------------
+# Handle the creature form data
+#-----------------------------------------------------------
+@app.post("/new")
+def process_task_form():
+    #Get the form data
+    name = request.form.get("name", "unkown").strip()
+    priority = request.form.get("priority", "unkown").strip()
+    # Connect to the DB
+    with connect_db() as db:
+        sql = """
+            INSERT INTO tasks (name, priority)
+            VALUES (?, ?)
+        """
+        params = (name, priority)
+
+        # Run the query
+        db.execute(sql, params)
+
+        flash(f"Task {name} added successfully")
+        # We're done, so back to the list
+        return redirect("/")
+
+
+
+#-----------------------------------------------------------
+# Task deletion
+#-----------------------------------------------------------
+@app.get("/<int:id>/delete")
+def delete_a_task(id):
+    with connect_db() as db:
+        # Delete the task using its ID
+        sql = """
+            DELETE FROM tasks
+            WHERE id=?
+        """
+        params = (id,)
+        db.execute(sql, params)
+
+        flash("Task Deleted", "success")
+        return redirect("/")
 #-----------------------------------------------------------
 # Help page - Show some help
 #-----------------------------------------------------------

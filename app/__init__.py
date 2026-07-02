@@ -28,7 +28,7 @@ def show_home():
     with connect_db() as db:
         sql = """
             SELECT complete, priority, name, id
-            FROM tasks
+            FROM tasks ORDER BY priority DESC
         """
         params = ()
         tasks = db.execute(sql, params).fetchall()
@@ -57,7 +57,7 @@ def process_task_form():
         # Run the query
         db.execute(sql, params)
 
-        flash(f"Task {name} added successfully")
+        flash(f"Task {name} added successfully", "success")
         # We're done, so back to the list
         return redirect("/")
 
@@ -79,6 +79,46 @@ def delete_a_task(id):
 
         flash("Task Deleted", "success")
         return redirect("/")
+
+
+        
+#-----------------------------------------------------------
+# Complete a task
+#-----------------------------------------------------------
+@app.get("/<int:id>/complete")
+def complete_a_task(id):
+    with connect_db() as db:
+        # complete the task using its ID
+        sql = """
+            UPDATE tasks SET complete = 1
+            WHERE id=?
+        """
+        params = (id,)
+        db.execute(sql, params)
+
+        flash("Task Updated", "success")
+        return redirect("/")
+
+
+
+#-----------------------------------------------------------
+# Upcomplete a task
+#-----------------------------------------------------------
+@app.get("/<int:id>/uncomplete")
+def uncomplete_a_task(id):
+    with connect_db() as db:
+        # complete the task using its ID
+        sql = """
+            UPDATE tasks SET complete = 0
+            WHERE id=?
+        """
+        params = (id,)
+        db.execute(sql, params)
+
+        flash("Task Updated", "success")
+        return redirect("/")
+
+
 #-----------------------------------------------------------
 # Help page - Show some help
 #-----------------------------------------------------------

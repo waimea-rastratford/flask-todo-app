@@ -8,20 +8,25 @@
 {% block content %}
 
     <h2 class="welcome">Tasks To Do</h2>
-    <div id="tasks">
+    <div class="tasks">
 
     <ul class="task-list">
      {% for task in tasks %}
         <li class="task">
-        {% if task.complete %} 🗹 {% else %} ☐ {% endif %}
+        {% if task.complete %} 
+        <a href="/{{ task.id }}/uncomplete">🗹</a>
+        {% else %}
+        <a href="/{{ task.id }}/complete">☐</a>
+        {% endif %}
             <span class="priority">{{ task.priority }}</span>
             <span class="name">{{ task.name }}</span>
-            <p><a href ="/{{ task.id }}/delete">Delete</a></p>
+            <p ><a href ="/{{ task.id }}/delete" id="delete">Delete</a></p>
         </li>
     {% endfor %}
     </ul>
 
     </div>
+    
 
 
 <form method="post" action="/new">
@@ -33,7 +38,7 @@
 
     <label>
       Priority
-      <input type="number" name="priority" required>
+      <input type="number" name="priority" min="1" max="5" required>
     </label>
   
   <button>Add Task</button>

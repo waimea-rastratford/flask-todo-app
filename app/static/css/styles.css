@@ -95,6 +95,18 @@ main > h2 {
             color: var(--accent-col);
         }
 
+
+        a {
+            color: var(--text-col);
+            text-decoration: none;
+           
+        }
+
+        #delete {
+            font-weight: bold;
+        }
+
+
     }
 
 #checkbox {
